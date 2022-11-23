@@ -115,8 +115,12 @@ class Main {
   };
   json2csv(jsons: ScoreInfo[]){
     const header = "title,difficulty,level,exscore,djlevel,cleartype";
+    const processTitle = (title: string) => {
+      if (title.indexOf(",") > -1) return `\"${title}\"`;
+      return title;
+    };
     const data = jsons.map((j) => [
-        j.title,j.difficulty,j.level,j.exscore,j.djlevel,j.cleartype
+        processTitle(j.title),j.difficulty,j.level,j.exscore,j.djlevel,j.cleartype
       ].join(","))
     .join("\n");
     return header + "\n" + data;
